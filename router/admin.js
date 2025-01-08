@@ -3,7 +3,6 @@ const adminRouter = Router();
 const { adminModel, courseModel } = require("../db");
 
 adminRouter.post("/signup" , function (req,res){
-  
 
 
 });
