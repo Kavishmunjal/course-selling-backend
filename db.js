@@ -13,7 +13,7 @@ const userSchema = new Schema({
 
 const adminSchema = new Schema({
     email: { type: String, unique: true },
-    password: String,
+    passward: String,
     firstName: String,
     lastName: String,
 });
