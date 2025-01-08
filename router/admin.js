@@ -2,7 +2,8 @@ const {Router} = require("express");
 const adminRouter = Router();
 const { adminModel, courseModel } = require("../db");
 const jwt = require("jsonwebtoken");
-const jwt_admin_Secret = "munjal";
+const jwt_admin_Secret = require("../jwt");
+const {adminMiddelware } = require("../middelware/admin");
 
 adminRouter.post("/signup" , async function (req,res){
     const email=  req.body.email;
@@ -50,7 +51,29 @@ adminRouter.post("/signin" , async function (req,res){
     }
   })
 
-adminRouter.put("/addCourse" , function (req,res){
+  adminRouter.post("/addCourse" , adminMiddelware ,async function (req,res){
+
+   const adminId = req.userId;
+   const {titleString, description,price,imageUrl}  = req.body;
+ 
+ 
+ const course =  await courseModel.create({
+    title : titleString,
+     description : description,
+     price : price,
+     imageUrl: imageUrl,
+     creatorId: adminId 
+  })
+
+  res.json({
+    message:"created sucessfully",
+    courseId : course._id  
+})
+    
+  })
+  
+
+adminRouter.put("/addCourse" , adminMiddelware , function (req,res){
 
 
     

@@ -5,7 +5,7 @@ const {userModel} = require("../db");
 const { setThePassword } = require("whatwg-url");
 const e = require("express");
 const jwt = require("jsonwebtoken");
-const jwt_user_Secret = "kavish"
+const jwt_user_Secret = require("../jwt")
 
 
 
