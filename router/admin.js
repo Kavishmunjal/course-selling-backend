@@ -73,21 +73,44 @@ adminRouter.post("/signin" , async function (req,res){
   })
   
 
-adminRouter.put("/addCourse" , adminMiddelware , function (req,res){
+adminRouter.put("/addCourse" , adminMiddelware , async function (req,res){
+  const { title, description, imageUrl, price, courseId } = req.body;
 
+
+  const course = await courseModel.updateOne({
+      _id: courseId, 
+      creatorId: adminId 
+  }, {
+      title: title, 
+      description: description, 
+      imageUrl: imageUrl, 
+      price: price
+  })
+
+  res.json({
+      message: "Course updated",
+      courseId: course._id
+  })
 
     
 })
 
-adminRouter.get("/allCourse" , function (req,res){
+adminRouter.get("/allCourse" , async function (req,res){
 
+  const adminId = req.userId;
 
-    
+  const courses = await courseModel.find({
+      creatorId: adminId ,
+  });
+
+  res.json({
+      message: "Course updated",
+  
 })
 
+})
 
 module.exports = {
 
 adminRouter:adminRouter
 }
-
